@@ -53,6 +53,8 @@ export async function transcribe(voiceStream) {
   const pass = new PassThrough();
   let response;
 
+  l(voiceStream)
+
   response = await axios({
     method: 'get',
     url: voiceStream,
