@@ -12,6 +12,7 @@ const serverlessConfiguration: AWS = {
       webpackConfig: "./webpack.config.js",
       includeModules: true,
     },
+    webpackIncludeModules: true
   },
   plugins: ["serverless-webpack"],
   provider: {
@@ -68,7 +69,7 @@ const serverlessConfiguration: AWS = {
     },
   },
   // import the function via paths
-  functions: { telegram },
+  functions: { telegram }
 };
 
 module.exports = serverlessConfiguration;
