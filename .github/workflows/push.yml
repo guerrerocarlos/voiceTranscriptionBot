@@ -26,14 +26,7 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
 
-      - uses: actions/cache@v1
-        id: node-modules-cache
-        with:
-          key: nodemodules-${{ hashFiles("**/yarn.lock") }}
-          path: "node_modules"
-
       - name: Install node_modules
-        if: steps.node-modules-cache.outputs.cache-hit != 'true'
         run: yarn install
 
       - name: Deploy
