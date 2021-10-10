@@ -57,7 +57,7 @@ export async function transcribe(voiceStream) {
 
   response = await axios({
     method: 'get',
-    url: voiceStream,
+    url: voiceStream.href,
     responseType: 'stream'
   })
 
