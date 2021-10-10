@@ -6,10 +6,10 @@ on:
       - "master"
 
 env:
+  BOT_TOKEN: ${{secrets.BOT_TOKEN}}
   TRANSCRIPTION_S3_BUCKET: ${{secrets.TRANSCRIPTION_S3_BUCKET}}
   TEMP_STORAGE_FOLDER: ${{secrets.TEMP_STORAGE_FOLDER}}
   WIT_TOKEN: ${{secrets.WIT_TOKEN}}
-  BOT_TOKEN: ${{secrets.BOT_TOKEN}}
   GC_BUCKET: ${{secrets.GC_BUCKET}}
   GC_CREDENTIALS: ${{secrets.GC_CREDENTIALS}}
 
@@ -27,7 +27,7 @@ jobs:
           aws-region: us-east-1
 
       - name: Install node_modules
-        run: yarn install
+        run: npx npm@7.21.0 install
 
       - name: Deploy
-        run: npx serverless deploy
+        run: npx serverless@2.62.0 deploy
