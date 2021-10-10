@@ -1,0 +1,40 @@
+name: Deploy to AWS Lambda
+
+on:
+  push:
+    branches:
+      - "master"
+
+env:
+  TRANSCRIPTION_S3_BUCKET: ${{secrets.TRANSCRIPTION_S3_BUCKET}}
+  TEMP_STORAGE_FOLDER: ${{secrets.TEMP_STORAGE_FOLDER}}
+  WIT_TOKEN: ${{secrets.WIT_TOKEN}}
+  BOT_TOKEN: ${{secrets.BOT_TOKEN}}
+  GC_BUCKET: ${{secrets.GC_BUCKET}}
+  GC_CREDENTIALS: ${{secrets.GC_CREDENTIALS}}
+
+jobs:
+  deploy:
+    name: "Serverless Deployment"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - uses: actions/cache@v1
+        id: node-modules-cache
+        with:
+          key: nodemodules-${{ hashFiles(yarn.lock) }}
+          path: "node_modules"
+
+      - name: Install node_modules
+        if: steps.node-modules-cache.outputs.cache-hit != 'true'
+        run: yarn install
+
+      - name: Deploy
+        run: npx serverless deploy
