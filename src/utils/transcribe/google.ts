@@ -1,7 +1,8 @@
 import { convertAudioToRaw } from "./helpers/ffmpeg";
 import { PassThrough } from "stream";
 import { put } from "./helpers/gStorage";
-import fetch from "node-fetch";
+// import fetch from "node-fetch";
+import axios from "axios"
 import { bindLog } from "../log";
 
 import googleKey from "./googleCredentials" 
@@ -52,9 +53,15 @@ export async function transcribe(voiceStream) {
   const pass = new PassThrough();
   let response;
 
-  response = await fetch(voiceStream, {});
+  response = await axios({
+    method: 'get',
+    url: voiceStream,
+    responseType: 'stream'
+  })
 
-  convertAudioToRaw(response.body, pass);
+  // response = await fetch(voiceStream, {});
+
+  convertAudioToRaw(response.data, pass);
 
   const rawFileName = `${process.env.TEMP_STORAGE_FOLDER}/${new Date().getTime()}.flac`;
 
