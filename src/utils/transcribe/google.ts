@@ -4,7 +4,7 @@ import { put } from "./helpers/gStorage";
 import fetch from "node-fetch";
 import { bindLog } from "../log";
 
-const googleKey = JSON.parse(process.env.GC_CREDENTIALS)
+import googleKey from "./googleCredentials" 
 
 let l = bindLog(__dirname, __filename);
 

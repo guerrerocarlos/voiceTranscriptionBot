@@ -1,9 +1,10 @@
 const { Storage } = require("@google-cloud/storage");
-const googleKey = JSON.parse(process.env.GC_CREDENTIALS)
+
+import googleKey from "../googleCredentials" 
 
 export function put(
-  bucketName = process.env.GC_BUCKET,
-  destFileName = "transcriptions/file.txt",
+  bucketName,
+  destFileName,
   pass
 ) {
 
@@ -32,6 +33,4 @@ export function put(
   });
 
   return promise;
-
 }
-

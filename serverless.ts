@@ -30,7 +30,7 @@ const serverlessConfiguration: AWS = {
       TEMP_STORAGE_FOLDER: process.env.TEMP_STORAGE_FOLDER,
       WIT_TOKEN: process.env.WIT_TOKEN,
       GC_BUCKET: process.env.GC_BUCKET,
-      GC_CREDENTIALS: process.env.GC_CREDENTIALS,
+      GC_CREDENTIALS: process.env.GC_CREDENTIALS
     },
     deploymentBucket: {
       name: "deployment-bucket-us-east-2",
@@ -56,8 +56,12 @@ const serverlessConfiguration: AWS = {
           },
           {
             Effect: "Allow",
-            Action: ["transcribe:StartTranscriptionJob", "transcribe:GetTranscriptionJob"],
-            Resource: "arn:aws:transcribe:us-east-2:149962407454:transcription-job/*",
+            Action: [
+              "transcribe:StartTranscriptionJob",
+              "transcribe:GetTranscriptionJob",
+            ],
+            Resource:
+              "arn:aws:transcribe:us-east-2:149962407454:transcription-job/*",
           },
         ],
       },
