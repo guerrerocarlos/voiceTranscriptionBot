@@ -29,7 +29,7 @@ jobs:
       - uses: actions/cache@v1
         id: node-modules-cache
         with:
-          key: nodemodules-${{ hashFiles(yarn.lock) }}
+          key: nodemodules-${{ hashFiles("yarn.lock") }}
           path: "node_modules"
 
       - name: Install node_modules
