@@ -27,7 +27,7 @@ jobs:
           aws-region: us-east-1
 
       - name: Install node_modules
-        run: yarn install
+        run: npm install
 
       - name: Deploy
         run: npx serverless deploy
