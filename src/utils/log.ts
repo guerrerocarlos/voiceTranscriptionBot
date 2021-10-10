@@ -1,4 +1,4 @@
-const path = require("path");
+import * as path from "path";
 
 const Reset = "\x1b[0m";
 const Bright = "\x1b[1m";

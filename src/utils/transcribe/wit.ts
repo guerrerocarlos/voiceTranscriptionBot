@@ -3,8 +3,9 @@ import fetch from "node-fetch";
 import * as dotenv from "dotenv";
 import { bindLog } from "../../utils/log";
 
-const https = require('https')
-const { PassThrough } = require('stream');
+import * as https from 'https'
+
+import { PassThrough } from 'stream'
 
 dotenv.config();
 

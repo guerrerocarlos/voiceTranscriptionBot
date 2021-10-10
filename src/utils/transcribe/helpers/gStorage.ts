@@ -1,13 +1,8 @@
-const { Storage } = require("@google-cloud/storage");
+import { Storage } from "@google-cloud/storage";
 
-import googleKey from "../googleCredentials" 
+import googleKey from "../googleCredentials";
 
-export function put(
-  bucketName,
-  destFileName,
-  pass
-) {
-
+export function put(bucketName, destFileName, pass) {
   // Creates a client
   const storage = new Storage({
     credentials: googleKey,

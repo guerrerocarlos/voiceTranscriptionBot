@@ -1,5 +1,5 @@
 import { convertAudioToRaw } from "./helpers/ffmpeg";
-const { PassThrough } = require("stream");
+import { PassThrough } from "stream";
 import { put } from "./helpers/gStorage";
 import fetch from "node-fetch";
 import { bindLog } from "../log";
@@ -9,7 +9,9 @@ import googleKey from "./googleCredentials"
 let l = bindLog(__dirname, __filename);
 
 // Imports the Google Cloud client library
-const speech = require("@google-cloud/speech").v1p1beta1
+import gSpeech from "@google-cloud/speech"
+  
+const speech = gSpeech.v1p1beta1
 
 // Creates a client
 const client = new speech.SpeechClient({
