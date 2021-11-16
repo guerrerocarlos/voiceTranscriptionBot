@@ -66,8 +66,8 @@ bot.on("voice", async function (ctx) {
       }
     }, 3000);
 
-    const timeout = new Promise((_resolve, reject) => {
-      setTimeout(reject, 29000, 'Could not transcribe, too long :(');
+    const timeout = new Promise((_resolve, _reject) => {
+      setTimeout(_resolve, 29000, 'Could not transcribe, too long :(');
     });
 
     console.log("replying...");
