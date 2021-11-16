@@ -80,12 +80,22 @@ bot.on("voice", async function (ctx) {
     clearInterval(interval);
 
     console.log("result", JSON.stringify(result, null, 2));
-    ctx.telegram.editMessageText(
-      ctx.chat.id,
-      translatingMessage.message_id,
-      undefined,
-      result.transcription || "Could not transcribe, too long"
-    );
+    
+    if (result.transcription) {
+      ctx.telegram.editMessageText(
+        ctx.chat.id,
+        translatingMessage.message_id,
+        undefined,
+        result.transcription 
+      );
+    } else {
+      ctx.telegram.editMessageText(
+        ctx.chat.id,
+        translatingMessage.message_id,
+        undefined,
+        "Could not transcribe, invalid duration."
+      );
+    }
   } catch (err) {
     await ctx.telegram.editMessageText(
       ctx.chat.id,
