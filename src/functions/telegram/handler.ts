@@ -67,21 +67,23 @@ bot.on("voice", async function (ctx) {
     }, 3000);
 
     const timeout = new Promise((_resolve, _reject) => {
-      setTimeout(_resolve, 29000, 'Could not transcribe, too long :(');
+      setTimeout(_resolve, 20000, "Could not transcribe, too long :(");
     });
 
     console.log("replying...");
 
-    let result = Promise.race([await googleTranscribe(fileLink), timeout]) as any
+    let result = Promise.race([
+      await googleTranscribe(fileLink),
+      timeout,
+    ]) as any;
     clearInterval(interval);
 
     console.log("result", JSON.stringify(result, null, 2));
-
     ctx.telegram.editMessageText(
       ctx.chat.id,
       translatingMessage.message_id,
       undefined,
-      result.transcription
+      result.transcription || result
     );
   } catch (err) {
     await ctx.telegram.editMessageText(
