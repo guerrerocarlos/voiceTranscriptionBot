@@ -66,10 +66,13 @@ bot.on("voice", async function (ctx) {
       }
     }, 3000);
 
+    const timeout = new Promise((_resolve, reject) => {
+      setTimeout(reject, 29000, 'Could not transcribe, too long :(');
+    });
+
     console.log("replying...");
 
-    let result = await googleTranscribe(fileLink);
-
+    let result = Promise.race([await googleTranscribe(fileLink), timeout]) as any
     clearInterval(interval);
 
     console.log("result", JSON.stringify(result, null, 2));
