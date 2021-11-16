@@ -52,6 +52,8 @@ bot.on("voice", async function (ctx) {
 
   console.log("FILE LINK", fileLink);
 
+  return {}
+
   try {
     let interval = setInterval(() => {
       ctx.telegram.editMessageText(
@@ -76,7 +78,7 @@ bot.on("voice", async function (ctx) {
       await googleTranscribe(fileLink),
       timeout,
     ]) as any;
-    
+
     clearInterval(interval);
 
     console.log("result", JSON.stringify(result, null, 2));
