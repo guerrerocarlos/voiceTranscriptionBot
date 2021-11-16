@@ -76,6 +76,7 @@ bot.on("voice", async function (ctx) {
       await googleTranscribe(fileLink),
       timeout,
     ]) as any;
+    
     clearInterval(interval);
 
     console.log("result", JSON.stringify(result, null, 2));
@@ -83,7 +84,7 @@ bot.on("voice", async function (ctx) {
       ctx.chat.id,
       translatingMessage.message_id,
       undefined,
-      result.transcription || result
+      result.transcription || "Could not transcribe, too long"
     );
   } catch (err) {
     await ctx.telegram.editMessageText(
