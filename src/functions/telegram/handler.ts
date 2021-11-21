@@ -66,36 +66,19 @@ bot.on("voice", async function (ctx) {
       }
     }, 3000);
 
-    const timeout = new Promise((_resolve, _reject) => {
-      setTimeout(_resolve, 20000, "Could not transcribe, too long :(");
-    });
-
     console.log("replying...");
 
-    let result = Promise.race([
-      await googleTranscribe(fileLink),
-      timeout,
-    ]) as any;
-    
+    let result = await googleTranscribe(fileLink) as any
     clearInterval(interval);
 
-    console.log("result", JSON.stringify(result, null, 2));
-    
-    if (result.transcription) {
-      ctx.telegram.editMessageText(
-        ctx.chat.id,
-        translatingMessage.message_id,
-        undefined,
-        result.transcription 
-      );
-    } else {
-      ctx.telegram.editMessageText(
-        ctx.chat.id,
-        translatingMessage.message_id,
-        undefined,
-        "Could not transcribe, invalid duration."
-      );
-    }
+    console.log("googleTranscribeResults", result)
+
+    await ctx.telegram.editMessageText(
+      ctx.chat.id,
+      translatingMessage.message_id,
+      undefined,
+      result.transcription
+    );
   } catch (err) {
     await ctx.telegram.editMessageText(
       ctx.chat.id,
@@ -111,11 +94,11 @@ bot.on("voice", async function (ctx) {
   }
 });
 
-export const main = (event, cb) => {
-  console.log("🔥", JSON.stringify(event, null, 2));
-  return makeHandler(bot.webhookCallback("/telegram"))(event, cb);
+export const main = (evt, cb) => {
+  console.log("🔥", JSON.stringify(evt.event, null, 2));
+  return makeHandler(bot.webhookCallback("/main"))(evt.event, evt.context);
 };
 
 // bot.telegram.setWebhook(
-//   "https://ilpifex4si.execute-api.us-east-2.amazonaws.com/dev/telegram"
+//   "https://ilpifex4si.execute-api.us-east-2.amazonaws.com/dev/async"
 // );

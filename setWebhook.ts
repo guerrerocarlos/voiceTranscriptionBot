@@ -9,5 +9,5 @@ const bot = new Telegraf(process.env.BOT_TOKEN, {
 });
 
 bot.telegram.setWebhook(
-  "https://ilpifex4si.execute-api.us-east-2.amazonaws.com/dev/telegram"
+  "https://ilpifex4si.execute-api.us-east-2.amazonaws.com/dev/main"
 );

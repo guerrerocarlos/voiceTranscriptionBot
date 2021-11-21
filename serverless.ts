@@ -1,6 +1,7 @@
 import type { AWS } from "@serverless/typescript";
 import * as dotenv from "dotenv";
 import telegram from "@functions/telegram";
+import main from "@functions/main";
 
 dotenv.config();
 
@@ -11,9 +12,9 @@ const serverlessConfiguration: AWS = {
     webpack: {
       webpackConfig: "./webpack.config.js",
       includeModules: {
-        forceExclude: ['aws-sdk']
+        forceExclude: ["aws-sdk"],
       },
-    }
+    },
   },
   plugins: ["serverless-webpack"],
   provider: {
@@ -32,7 +33,7 @@ const serverlessConfiguration: AWS = {
       TEMP_STORAGE_FOLDER: process.env.TEMP_STORAGE_FOLDER,
       WIT_TOKEN: process.env.WIT_TOKEN,
       GC_BUCKET: process.env.GC_BUCKET,
-      GC_CREDENTIALS: process.env.GC_CREDENTIALS
+      GC_CREDENTIALS: process.env.GC_CREDENTIALS,
     },
     deploymentBucket: {
       name: "deployment-bucket-us-east-2",
@@ -41,6 +42,11 @@ const serverlessConfiguration: AWS = {
     iam: {
       role: {
         statements: [
+          {
+            Effect: "Allow",
+            Action: ["lambda:InvokeFunction"],
+            Resource: ["*"],
+          },
           {
             Effect: "Allow",
             Action: ["s3:ListBucket"],
@@ -70,7 +76,7 @@ const serverlessConfiguration: AWS = {
     },
   },
   // import the function via paths
-  functions: { telegram }
+  functions: { telegram, main },
 };
 
 module.exports = serverlessConfiguration;
