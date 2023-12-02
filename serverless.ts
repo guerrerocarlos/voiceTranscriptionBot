@@ -50,17 +50,17 @@ const serverlessConfiguration: AWS = {
           {
             Effect: "Allow",
             Action: ["s3:ListBucket"],
-            Resource: "arn:aws:s3:::idiomasconliza.com",
+            Resource: "arn:aws:s3:::telegram-bots-us-east-2",
           },
           {
             Effect: "Allow",
             Action: ["s3:PutObject"],
-            Resource: "arn:aws:s3:::idiomasconliza.com/*",
+            Resource: "arn:aws:s3:::telegram-bots-us-east-2/*",
           },
           {
             Effect: "Allow",
             Action: ["s3:GetObject"],
-            Resource: "arn:aws:s3:::idiomasconliza.com/*",
+            Resource: "arn:aws:s3:::telegram-bots-us-east-2/*",
           },
           {
             Effect: "Allow",
