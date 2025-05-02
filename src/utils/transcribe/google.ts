@@ -49,7 +49,7 @@ async function googleSpeech(gcsUri, language) {
   return response;
 }
 
-export async function transcribe(voiceStream) {
+export async function transcribe(voiceStream, processTracking) {
   const pass = new PassThrough();
   let response;
 
@@ -66,7 +66,9 @@ export async function transcribe(voiceStream) {
   convertAudioToRaw(response.data, pass);
 
   const rawFileName = `${process.env.TEMP_STORAGE_FOLDER}/${new Date().getTime()}.flac`;
-
+  console.log("rawFileName", rawFileName);
+  processTracking.rawFileName = rawFileName;
+  
   await put("r3js", rawFileName, pass);
 
   try {

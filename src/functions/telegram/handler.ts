@@ -4,6 +4,7 @@ import { transcribe as googleTranscribe } from "../../utils/transcribe/google";
 
 import * as makeHandler from "lambda-request-handler";
 import { Telegraf } from "telegraf";
+import { put } from "src/utils/s3";
 
 const bot = new Telegraf(process.env.BOT_TOKEN, {
   telegram: { webhookReply: true },
@@ -52,6 +53,16 @@ bot.on("voice", async function (ctx) {
 
   console.log("FILE LINK", fileLink);
 
+  let processTracking = {
+    chatId: ctx.chat.id,
+    dayString: new Date().toISOString().split("T")[0],
+    start: new Date().getTime(),
+    result: null,
+    error: null,
+    rawFileName: "",
+    end: null,
+  }
+
   try {
     let interval = setInterval(() => {
       ctx.telegram.editMessageText(
@@ -68,8 +79,9 @@ bot.on("voice", async function (ctx) {
 
     console.log("replying...");
 
-    let result = await googleTranscribe(fileLink) as any
+    let result = await googleTranscribe(fileLink, processTracking) as any
     clearInterval(interval);
+    processTracking.result = result;
 
     console.log("googleTranscribeResults", result)
 
@@ -80,6 +92,8 @@ bot.on("voice", async function (ctx) {
       result.transcription
     );
   } catch (err) {
+    processTracking.error = err
+    processTracking.end = new Date().getTime();
     await ctx.telegram.editMessageText(
       ctx.chat.id,
       translatingMessage.message_id,
@@ -92,6 +106,8 @@ bot.on("voice", async function (ctx) {
       translatingMessage.message_id
     );
   }
+  console.log("processTracking", JSON.stringify(processTracking, null, 2));
+  await put("voiceTranscriptionBot", `processTracking/${ctx.chat.id}/${processTracking.dayString}/${processTracking.start}`, processTracking);
 });
 
 export const main = (evt, cb) => {
