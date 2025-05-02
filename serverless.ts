@@ -34,6 +34,11 @@ const serverlessConfiguration: AWS = {
       WIT_TOKEN: process.env.WIT_TOKEN,
       GC_BUCKET: process.env.GC_BUCKET,
       GC_CREDENTIALS: process.env.GC_CREDENTIALS,
+      DO_ENDPOINT: process.env.DO_ENDPOINT,
+      DO_REGION: process.env.DO_REGION,
+      DO_KEY: process.env.DO_KEY,
+      DO_SECRET: process.env.DO_SECRET,
+      S3_BUCKET: process.env.S3_BUCKET,
     },
     deploymentBucket: {
       name: "deployment-bucket-us-east-2",
