@@ -12,11 +12,12 @@ Last updated: 2026-07-14
 - `/health` exposes `branch`, `commitHash`, and `deployedAt` from deploy-time variables.
 - GitHub Actions secrets include `BOT_TOKEN` and `OPENAI_API_KEY`.
 - `BOT_TOKEN` was refreshed for `@voiceTranscriptionBot` on 2026-07-14.
+- Runtime reached OpenAI successfully, but transcription is currently blocked by OpenAI quota/billing on the configured project key.
 
 ## Active Priorities
 
-- Redeploy after the `BOT_TOKEN` refresh and verify `/health` reports both `openaiConfigured: true` and `botConfigured: true`.
-- Set Telegram webhook to `https://guerrerocarlos.w7s.cloud/voiceTranscriptionBot/telegram`.
+- Add credits or increase the OpenAI project/org budget for the configured `OPENAI_API_KEY`.
+- After billing/quota is fixed, send a Telegram voice message to verify end-to-end transcription.
 
 ## Known Issues
 
