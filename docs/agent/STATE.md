@@ -10,13 +10,14 @@ Last updated: 2026-07-14
 - The bot receives Telegram webhook updates at `/telegram`.
 - Voice and audio messages are downloaded from Telegram and transcribed through OpenAI's audio transcription API with `whisper-1` by default.
 - `/health` exposes `branch`, `commitHash`, and `deployedAt` from deploy-time variables.
+- GitHub Actions secrets include `BOT_TOKEN` and `OPENAI_API_KEY`.
 
 ## Active Priorities
 
-- Configure W7S/GitHub secrets: `BOT_TOKEN`, `OPENAI_API_KEY`, and optional `TELEGRAM_WEBHOOK_SECRET`.
+- Redeploy after secret changes and verify `/health` reports `openaiConfigured: true`.
 - After deployment, run `npm run set-webhook` with the production W7S app URL.
 
 ## Known Issues
 
-- Live transcription cannot be verified locally without valid Telegram and OpenAI secrets.
+- Live transcription requires production secrets and Telegram webhook delivery; local checks only verify Worker routing and metadata.
 - The uppercase workspace `/home/gnu/VoiceTranscriptionBot` is not a git checkout; the real repository is `/home/gnu/voiceTranscriptionBot`.
