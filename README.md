@@ -37,7 +37,7 @@ After deployment, point Telegram at the W7S app:
 
 ```bash
 BOT_TOKEN=... \
-W7S_APP_URL=https://omattic.w7s.cloud/voiceTranscriptionBot \
+W7S_APP_URL=https://guerrerocarlos.w7s.cloud/voicetranscriptionbot \
 TELEGRAM_WEBHOOK_SECRET=... \
 npm run set-webhook
 ```

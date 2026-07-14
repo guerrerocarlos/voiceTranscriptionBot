@@ -45,7 +45,7 @@ jobs:
       - name: Smoke test
         run: |
           set -euo pipefail
-          url="https://omattic.w7s.cloud/voiceTranscriptionBot/health"
+          url="https://guerrerocarlos.w7s.cloud/voicetranscriptionbot/health"
           for attempt in {1..12}; do
             if body="$(curl -fsS "$url")"; then
               echo "$body"
