@@ -1,0 +1,13 @@
+{
+  "vars": [
+    "APP_BRANCH",
+    "APP_COMMIT_HASH",
+    "APP_DEPLOYED_AT",
+    "OPENAI_TRANSCRIPTION_MODEL"
+  ],
+  "secrets": [
+    "BOT_TOKEN",
+    "OPENAI_API_KEY",
+    "TELEGRAM_WEBHOOK_SECRET"
+  ]
+}

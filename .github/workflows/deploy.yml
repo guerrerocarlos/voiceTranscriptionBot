@@ -1,0 +1,61 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+concurrency:
+  group: deploy-master
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm run check
+
+      - name: Capture deployment timestamp
+        run: echo "APP_DEPLOYED_AT=$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> "$GITHUB_ENV"
+
+      - uses: w7s-io/w7s-cloud@v1
+        env:
+          APP_BRANCH: ${{ github.ref_name }}
+          APP_COMMIT_HASH: ${{ github.sha }}
+          APP_DEPLOYED_AT: ${{ env.APP_DEPLOYED_AT }}
+          OPENAI_TRANSCRIPTION_MODEL: ${{ vars.OPENAI_TRANSCRIPTION_MODEL || 'whisper-1' }}
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          TELEGRAM_WEBHOOK_SECRET: ${{ secrets.TELEGRAM_WEBHOOK_SECRET }}
+
+      - name: Smoke test
+        run: |
+          set -euo pipefail
+          url="https://omattic.w7s.cloud/voiceTranscriptionBot/health"
+          for attempt in {1..12}; do
+            if body="$(curl -fsS "$url")"; then
+              echo "$body"
+              BODY="$body" node - <<'NODE'
+          const body = JSON.parse(process.env.BODY);
+          if (body.service !== "voicetranscriptionbot") throw new Error("unexpected service");
+          if (!body.branch || !body.commitHash || !body.deployedAt) throw new Error("missing deployment metadata");
+          NODE
+              exit 0
+            fi
+            sleep 5
+          done
+          curl -fsS "$url"
