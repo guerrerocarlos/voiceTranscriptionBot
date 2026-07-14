@@ -3,7 +3,7 @@ const baseUrl = process.env.W7S_APP_URL;
 const secretToken = process.env.TELEGRAM_WEBHOOK_SECRET;
 
 if (!token || !baseUrl) {
-  console.error("Usage: BOT_TOKEN=... W7S_APP_URL=https://guerrerocarlos.w7s.cloud/voicetranscriptionbot [TELEGRAM_WEBHOOK_SECRET=...] npm run set-webhook");
+  console.error("Usage: BOT_TOKEN=... W7S_APP_URL=https://guerrerocarlos.w7s.cloud/voiceTranscriptionBot [TELEGRAM_WEBHOOK_SECRET=...] npm run set-webhook");
   process.exit(1);
 }
 
