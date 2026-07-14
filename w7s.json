@@ -1,4 +1,9 @@
 {
+  "bindings": {
+    "kv": [
+      "BALANCES"
+    ]
+  },
   "vars": [
     "APP_BRANCH",
     "APP_COMMIT_HASH",

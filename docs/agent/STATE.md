@@ -13,11 +13,14 @@ Last updated: 2026-07-14
 - GitHub Actions secrets include `BOT_TOKEN` and `OPENAI_API_KEY`.
 - `BOT_TOKEN` was refreshed for `@voiceTranscriptionBot` on 2026-07-14.
 - Runtime reached OpenAI successfully, but transcription is currently blocked by OpenAI quota/billing on the configured project key.
+- Monetization uses Telegram Stars with per-user balances in the W7S KV binding `BALANCES`.
+- Every user receives 25 free transcription credits; audio costs 1 credit per started minute.
 
 ## Active Priorities
 
 - Add credits or increase the OpenAI project/org budget for the configured `OPENAI_API_KEY`.
 - After billing/quota is fixed, send a Telegram voice message to verify end-to-end transcription.
+- After first paid purchase, verify `successful_payment` adds credits and stores the Telegram charge ID.
 
 ## Known Issues
 

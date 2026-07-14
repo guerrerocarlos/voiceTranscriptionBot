@@ -1,11 +1,18 @@
 import { describe, expect, it } from "vitest";
-import worker, { truncateTelegramText } from "../backend/index";
+import worker, {
+  buildInvoicePayload,
+  calculateAudioCost,
+  parseBuyAmount,
+  parseInvoicePayload,
+  truncateTelegramText,
+} from "../backend/index";
 
 describe("worker", () => {
   it("returns deployment metadata on health", async () => {
     const response = await worker.fetch(
       new Request("https://example.com/health"),
       {
+        BALANCES: {} as KVNamespace,
         APP_BRANCH: "master",
         APP_COMMIT_HASH: "abc123",
         APP_DEPLOYED_AT: "2026-07-14T00:00:00Z",
@@ -22,6 +29,9 @@ describe("worker", () => {
       commitHash: "abc123",
       deployedAt: "2026-07-14T00:00:00Z",
       model: "whisper-1",
+      balancesConfigured: true,
+      freeStartingCredits: 25,
+      defaultBuyStars: 25,
       openaiConfigured: false,
       botConfigured: false,
     });
@@ -66,5 +76,25 @@ describe("worker", () => {
 
   it("truncates long Telegram replies", () => {
     expect(truncateTelegramText("a".repeat(5000))).toHaveLength(3900);
+  });
+
+  it("charges one credit per started audio minute", () => {
+    expect(calculateAudioCost(1)).toBe(1);
+    expect(calculateAudioCost(60)).toBe(1);
+    expect(calculateAudioCost(61)).toBe(2);
+    expect(calculateAudioCost(121)).toBe(3);
+  });
+
+  it("parses and clamps buy amounts", () => {
+    expect(parseBuyAmount("/buy")).toBe(25);
+    expect(parseBuyAmount("/buy 10")).toBe(25);
+    expect(parseBuyAmount("/buy 100")).toBe(100);
+    expect(parseBuyAmount("/buy 9999")).toBe(2500);
+  });
+
+  it("builds parseable payment payloads", () => {
+    const payload = buildInvoicePayload(123, 50);
+    expect(parseInvoicePayload(payload)).toEqual({ userId: 123, amount: 50 });
+    expect(parseInvoicePayload("invalid")).toBeNull();
   });
 });

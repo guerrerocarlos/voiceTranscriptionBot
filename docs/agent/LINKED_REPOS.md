@@ -10,4 +10,5 @@ Last updated: 2026-07-14
 ## External Services
 
 - Telegram Bot API owns webhook delivery and voice-file download URLs.
+- Telegram Stars owns in-app payment collection for transcription credit purchases.
 - OpenAI Audio Transcriptions owns speech-to-text conversion.

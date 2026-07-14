@@ -12,7 +12,7 @@ appUrl.pathname = `${appUrl.pathname.replace(/\/$/, "")}/telegram`;
 const webhookUrl = appUrl.toString();
 const payload = {
   url: webhookUrl,
-  allowed_updates: ["message"],
+  allowed_updates: ["message", "pre_checkout_query"],
   ...(secretToken ? { secret_token: secretToken } : {}),
 };
 

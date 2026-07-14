@@ -37,6 +37,10 @@ Optional variable:
 
 - `OPENAI_TRANSCRIPTION_MODEL` defaults to `whisper-1`.
 
+Required W7S binding:
+
+- KV namespace `BALANCES`
+
 ## Webhook Setup
 
 ```bash
@@ -53,3 +57,12 @@ curl -fsS https://guerrerocarlos.w7s.cloud/voiceTranscriptionBot/health
 ```
 
 The response must include `branch`, `commitHash`, and `deployedAt`.
+
+## Monetization Verification
+
+Use Telegram:
+
+- `/balance` should grant and show 25 free credits on first use.
+- `/buy` should send a 25-Star invoice.
+- `/buy 100` should send a 100-Star invoice.
+- After payment, `successful_payment` should increase the user's credit balance.

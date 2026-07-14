@@ -13,3 +13,7 @@ Audio transcription defaults to OpenAI `whisper-1` because the requested behavio
 ## Telegram Webhook Security
 
 `TELEGRAM_WEBHOOK_SECRET` is optional but supported. When set, the Worker requires Telegram's `X-Telegram-Bot-Api-Secret-Token` header on `/telegram`.
+
+## Telegram Stars Monetization
+
+The bot uses Telegram Stars as the native in-Telegram payment method for transcription credits. Balances are stored in W7S KV under `BALANCES`, with 25 free starting credits per Telegram user and a cost of 1 credit per started audio minute.
