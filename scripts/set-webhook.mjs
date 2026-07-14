@@ -7,7 +7,9 @@ if (!token || !baseUrl) {
   process.exit(1);
 }
 
-const webhookUrl = new URL("/telegram", baseUrl).toString();
+const appUrl = new URL(baseUrl);
+appUrl.pathname = `${appUrl.pathname.replace(/\/$/, "")}/telegram`;
+const webhookUrl = appUrl.toString();
 const payload = {
   url: webhookUrl,
   allowed_updates: ["message"],
